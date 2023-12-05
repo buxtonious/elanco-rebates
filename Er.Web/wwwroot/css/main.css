@@ -1,0 +1,84 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap');
+
+/* Global */
+:root {
+    --er-primary: #0074d5;
+    --er-secondary: #003d70;
+    --er-tertiary: #adb5bd;
+    --er-white: #FFF;
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    color: var(--er-secondary) !important;
+    font-family: 'Ubuntu', sans-serif !important;
+}
+
+h2 {
+    color: var(--er-primary) !important;
+}
+
+h4 {
+    color: var(--er-secondary) !important;
+}
+
+.btn, 
+.form-control, 
+.form-select,
+.alert {
+    border-radius: 0 !important;
+    transition: none !important;
+}
+
+.btn-primary {
+    background-color: var(--er-primary) !important;
+    border-color: var(--er-primary) !important;
+}
+
+.btn-outline-secondary, .btn-outline-secondary:hover {
+    border-color: var(--er-tertiary) !important;
+    color: var(--er-tertiary) !important;
+    background-color: var(--er-white) !important;
+}
+
+/* Header */
+.logo {
+    color: var(--er-primary) !important;
+}
+
+.nav-border {
+    border-bottom: 4px solid var(--er-primary);
+}
+
+/* Form */
+.validation-summary .alert {
+    background-color: var(--er-white) !important;
+    color: var(--bs-danger) !important;
+    border: 2px solid var(--bs-danger) !important;
+}
+
+span.validation-error {
+    color: var(--bs-danger) !important;
+    font-size: 14px !important;
+}
+
+input.validation-error, select.validation-error {
+    border-color: var(--bs-danger) !important;
+}
+
+.form-control, .form-select {
+    border-color: var(--er-tertiary) !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--er-secondary) !important;
+}
+
+.form-control, .form-select option {
+    color: var(--er-secondary) !important;
+}
+
+.form-control::placeholder, .form-select {
+    color: var(--er-tertiary) !important;
+}

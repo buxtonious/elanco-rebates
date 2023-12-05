@@ -1,0 +1,92 @@
+﻿@model Er.Core.Models.RebateFormStep1
+@{
+    var salutations = new SelectList(Model.Salutations.Select(x => x));
+    var countries = new SelectList(Model.Countries.Select(x => x));
+}
+
+<div>
+    <div class="validation-summary"></div>
+    <div class="py-2">
+        <h2 class="fw-bold">Your details</h2>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 pb-5">
+        <div class="col-12 col-md-6">
+            <div class="py-2">
+                <h4 class="fw-bold mb-3">Basic details</h4>
+            </div>
+            <div class="row align-content-center">
+                <div class="col-6 mb-3">
+                    @Html.LabelFor(x => x.Salutation, new { @class = "form-label mb-1" })
+                    @Html.DropDownListFor(x => x.Salutation, salutations, "Please select", new { @class = "form-select", @required = "required" })
+                </div>
+                <div class="col-6"></div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.FirstName, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", @placeholder = "John", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.LastName, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", @placeholder = "Smith", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 mb-3">
+                    @Html.LabelFor(x => x.Email, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "johnsmith@example.com", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.PetName, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PetName, new { @class = "form-control", @placeholder = "Marbles", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.PetBirthday, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PetBirthday, new { @class = "form-control", @placeholder = "DD/MM/YYYY", @autocomplete = "true" })
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 pt-4 pt-md-0">
+            <div class="py-2">
+                <h4 class="fw-bold mb-3">Address details</h4>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    @Html.LabelFor(x => x.AddressLine1, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.AddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 mb-3">
+                    @Html.LabelFor(x => x.AddressLine2, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.AddressLine2, new { @class = "form-control", @autocomplete = "true" })
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.AddressCity, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.AddressCity, new { @class = "form-control", @placeholder = "London", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 col-md-6"></div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.AddressCountry, new { @class = "form-label mb-1" })
+                    @Html.DropDownListFor(x => x.AddressCountry, countries, "Please select", new { @class = "form-select", @required = "required" })
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    @Html.LabelFor(x => x.AddressPostCode, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.AddressPostCode, new { @class = "form-control", @placeholder = "SW12 3AE", @required = "required", @autocomplete = "true" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-bottom bg-white form-navigation">
+        <div class="container container-fluid">
+            <div class="d-flex justify-content-end py-3 px-0 px-md-5">
+                <button class="btn btn-outline-secondary me-2 d-flex align-items-center" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short me-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
+                    </svg>
+                    Back
+                </button>
+                <button class="btn btn-primary d-flex align-items-center next" type="button" data-next="2">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short ms-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

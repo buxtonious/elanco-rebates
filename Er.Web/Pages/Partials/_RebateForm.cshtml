@@ -1,0 +1,19 @@
+﻿@model Er.Core.Models.RebateForm
+@{
+
+}
+
+<div class="container container-fluid px-md-5">
+    @using (Html.BeginForm())
+    {
+        <div class="step" data-step="1">
+            @await Html.PartialAsync("Partials/_RebateFormStep1", Model.PersonalDetails)
+        </div>
+        <div class="step" data-step="2">
+            @await Html.PartialAsync("Partials/_RebateFormStep2", Model.ClinicDetails)
+        </div>
+        <div class="step" data-step="3">
+            @await Html.PartialAsync("Partials/_RebateFormStep3", Model.Preferences)
+        </div>
+    }
+</div>

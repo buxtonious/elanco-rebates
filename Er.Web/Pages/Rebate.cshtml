@@ -1,0 +1,14 @@
+﻿@page
+@model Er.Web.Pages.RebateModel
+@{
+    ViewData["Title"] = "Claim your rebate";
+    Layout = "_Layout";
+}
+
+<div>
+    @await Html.PartialAsync("Partials/_RebateForm", Model.FormData)
+</div>
+
+@section Scripts {
+    <script src="~/js/main.js"></script>
+}
