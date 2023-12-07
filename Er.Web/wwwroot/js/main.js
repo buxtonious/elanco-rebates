@@ -2,11 +2,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let validator = new Validator();
     let navigationManager = new NavigationManager(validator);
 
-    registerNavigationNextButtons();
+    registerNavigationButtons();
+    registerSubmissionButton();
     registerFields();
 
-    function registerNavigationNextButtons() {
-        let nextButtons = document.querySelectorAll('.form-navigation .next');
+    function registerNavigationButtons() {
+        let nextButtons = document.querySelectorAll(".form-navigation .next");
+        let backButtons = document.querySelectorAll(".form-navigation .back");
 
         for (let i = 0; i < nextButtons.length; i++) {
             nextButtons[i].addEventListener("click", function (event) {
@@ -16,10 +18,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 navigationManager.navigateForward(currentStep, stepToNavigateTo);
             });
         }
+
+        for (let i = 0; i < backButtons.length; i++) {
+            backButtons[i].addEventListener("click", function (event) {
+                let currentStep = event.target.closest(".step").dataset.step;
+                let stepToNavigateTo = event.target.dataset.back;
+
+                navigationManager.navigateBackward(currentStep, stepToNavigateTo);
+            });
+        }
+    }
+
+    async function registerSubmissionButton() {
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            let currentStep = event.submitter.closest(".step").dataset.step;
+            await navigationManager.submitForm(currentStep);
+        });
     }
 
     function registerFields() {
-        let fields = document.querySelectorAll('input');
+        let inputs = document.querySelectorAll('input');
+        let selects = document.querySelectorAll('select');
+        let fields = [...inputs, ...selects];
 
         for (let i = 0; i < fields.length; i++) {
             fields[i].addEventListener("change", function (event) {
@@ -36,9 +60,50 @@ class NavigationManager {
         this.validator = validator;
     }
 
+    async submitForm(currentStep) {
+        this.validator = new Validator(currentStep);
+        let isValid = this.validator.validate();
+
+        if (!isValid) {
+            return;
+        }
+
+        let form = document.querySelector("form");
+        let formData = new FormData(form);
+
+        try {
+            let response = await fetch("/Rebate", {
+                method: "POST",
+                body: formData
+            });
+
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     navigateForward(currentStep, stepToNavigateTo) {
         this.validator = new Validator(currentStep);
         let isValid = this.validator.validate();
+
+        if (!isValid) {
+            return;
+        }
+
+        let currentStepContainer = document.querySelector(`.step[data-step="${currentStep}"]`);
+        let nextStepContainer = document.querySelector(`.step[data-step="${stepToNavigateTo}"]`);
+
+        currentStepContainer.style.display = "none";
+        nextStepContainer.style.display = "block";
+    }
+
+    navigateBackward(currentStep, stepToNavigateTo) {
+        let currentStepContainer = document.querySelector(`.step[data-step="${currentStep}"]`);
+        let previousStepContainer = document.querySelector(`.step[data-step="${stepToNavigateTo}"]`);
+
+        currentStepContainer.style.display = "none";
+        previousStepContainer.style.display = "block";
     }
 }
 
@@ -79,7 +144,11 @@ class Validator {
 
         this.createValidationSummary();
 
-        return false;
+        if (!this.validationErrors || this.validationErrors.length > 0) {
+            return false;
+        }
+
+        return true;
     }
 
     createErrorMessage(requiredField, labelText) {
@@ -129,7 +198,7 @@ class Validator {
         alertElement.setAttribute("role", "alert");
 
         alertHeading.classList.add("alert-heading", "fw-bold");
-        alertHeading.textContent = "Please fix these fields before continuing!";
+        alertHeading.textContent = "Please enter something in these field(s):";
 
         for (let i = 0; i < this.validationErrors.length; i++) {
             let alertListItem = document.createElement("li");
@@ -157,14 +226,19 @@ class Validator {
             }
         }
 
-        let validationSummaryListItem = document.querySelector(`.validation-summary li.${key}`);
-        let validationErrorSpan = field.closest("div").querySelector("span.validation-error");
+        let alert = document.querySelector(".validation-summary .alert");
+        let listItem = document.querySelector(`.validation-summary li.${key}`);
+        let errorSpan = field.closest("div").querySelector("span.validation-error");
 
-        if (validationSummaryListItem && validationErrorSpan) {
-            validationSummaryListItem.remove();
-            validationErrorSpan.remove();
+        if (listItem && errorSpan) {
+            listItem.remove();
+            errorSpan.remove();
 
             field.classList.remove("validation-error");
+        }
+
+        if (this.validationErrors.length == 0 && alert) {
+            alert.remove();
         }
     }
 

@@ -4,15 +4,17 @@
 }
 
 <div class="container container-fluid px-md-5">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("OnPost", "Rebate", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
+        <div class="validation-summary"></div>
         <div class="step" data-step="1">
             @await Html.PartialAsync("Partials/_RebateFormStep1", Model.PersonalDetails)
         </div>
-        <div class="step" data-step="2">
+        <div class="step" data-step="2" style="display: none;">
             @await Html.PartialAsync("Partials/_RebateFormStep2", Model.ClinicDetails)
         </div>
-        <div class="step" data-step="3">
+        <div class="step" data-step="3" style="display: none;">
             @await Html.PartialAsync("Partials/_RebateFormStep3", Model.Preferences)
         </div>
     }

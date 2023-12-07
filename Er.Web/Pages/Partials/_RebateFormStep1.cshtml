@@ -2,10 +2,12 @@
 @{
     var salutations = new SelectList(Model.Salutations.Select(x => x));
     var countries = new SelectList(Model.Countries.Select(x => x));
+
+    ViewData.TemplateInfo.HtmlFieldPrefix = "PersonalDetails";
 }
 
+@Html.HiddenFor(x => x.SelectedRebate.Id)
 <div>
-    <div class="validation-summary"></div>
     <div class="py-2">
         <h2 class="fw-bold">Your details</h2>
     </div>
@@ -48,25 +50,25 @@
             </div>
             <div class="row">
                 <div class="col-12 mb-3">
-                    @Html.LabelFor(x => x.AddressLine1, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.AddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @required = "required", @autocomplete = "true" })
+                    @Html.LabelFor(x => x.PersonalAddressLine1, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PersonalAddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @required = "required", @autocomplete = "true" })
                 </div>
                 <div class="col-12 mb-3">
-                    @Html.LabelFor(x => x.AddressLine2, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.AddressLine2, new { @class = "form-control", @autocomplete = "true" })
+                    @Html.LabelFor(x => x.PersonalAddressLine2, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PersonalAddressLine2, new { @class = "form-control", @autocomplete = "true" })
                 </div>
                 <div class="col-12 col-md-6 mb-3">
-                    @Html.LabelFor(x => x.AddressCity, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.AddressCity, new { @class = "form-control", @placeholder = "London", @required = "required", @autocomplete = "true" })
+                    @Html.LabelFor(x => x.PersonalAddressCity, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PersonalAddressCity, new { @class = "form-control", @placeholder = "London", @required = "required", @autocomplete = "true" })
                 </div>
                 <div class="col-12 col-md-6"></div>
                 <div class="col-12 col-md-6 mb-3">
-                    @Html.LabelFor(x => x.AddressCountry, new { @class = "form-label mb-1" })
-                    @Html.DropDownListFor(x => x.AddressCountry, countries, "Please select", new { @class = "form-select", @required = "required" })
+                    @Html.LabelFor(x => x.PersonalAddressCountry, new { @class = "form-label mb-1" })
+                    @Html.DropDownListFor(x => x.PersonalAddressCountry, countries, "Please select", new { @class = "form-select", @required = "required" })
                 </div>
                 <div class="col-12 col-md-6 mb-3">
-                    @Html.LabelFor(x => x.AddressPostCode, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.AddressPostCode, new { @class = "form-control", @placeholder = "SW12 3AE", @required = "required", @autocomplete = "true" })
+                    @Html.LabelFor(x => x.PersonalAddressPostCode, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.PersonalAddressPostCode, new { @class = "form-control", @placeholder = "SW12 3AE", @required = "required", @autocomplete = "true" })
                 </div>
             </div>
         </div>
@@ -82,7 +84,7 @@
                 </button>
                 <button class="btn btn-primary d-flex align-items-center next" type="button" data-next="2">
                     Next
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short ms-1" viewBox="0 0 16 16">
+                    <svg data-step="2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short ms-1" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
                     </svg>
                 </button>

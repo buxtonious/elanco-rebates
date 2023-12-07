@@ -1,3 +1,5 @@
+using Er.Core.Extensions;
+
 namespace Er.Web
 {
     public class Program
@@ -7,6 +9,8 @@ namespace Er.Web
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddRazorPages();
+
+            builder.Services.AddCore();
 
             var app = builder.Build();
 

@@ -75,10 +75,10 @@ input.validation-error, select.validation-error {
     border-color: var(--er-secondary) !important;
 }
 
-.form-control, .form-select option {
+.form-control, .form-select {
     color: var(--er-secondary) !important;
 }
 
-.form-control::placeholder, .form-select {
+.form-control::placeholder {
     color: var(--er-tertiary) !important;
 }

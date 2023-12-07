@@ -1,11 +1,20 @@
-﻿namespace Er.Core.Models
+﻿using Er.Models.Entities;
+
+namespace Er.Core.Models
 {
     public partial class RebateForm
     {
-        public RebateForm(List<string> salutations, List<string> countries)
+        public RebateForm()
         {
-            PersonalDetails = new RebateFormStep1(salutations, countries);
+
+        }
+
+        public RebateForm(RebateOffer selectedRebate, List<string> salutations,
+            List<string> countries)
+        {
+            PersonalDetails = new RebateFormStep1(selectedRebate, salutations, countries);
             ClinicDetails = new RebateFormStep2(countries);
+            Preferences = new RebateFormStep3();
         }
 
         public RebateFormStep1 PersonalDetails { get; set; }

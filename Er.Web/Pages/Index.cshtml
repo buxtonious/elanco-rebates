@@ -12,7 +12,33 @@
             <h4 class="fw-bold mb-3">Select a rebate to begin</h4>
         </div>
         <div class="py-3">
-
+            @if (Model.RebateOffers != null && Model.RebateOffers.Any())
+            {
+                @using (Html.BeginForm())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Offer</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Deadline</th>
+                                <th scoped="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rebateOffer in Model.RebateOffers)
+                            {
+                                <tr>
+                                    <td>@rebateOffer.Name</td>
+                                    <td>@rebateOffer.Code</td>
+                                    <td>@rebateOffer.SubmissionDeadline</td>
+                                    <td><button class="btn btn-primary" name="rebateOfferId" value="@rebateOffer.Id" type="submit">Claim</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
         </div>
     </div>
     <div class="col">
