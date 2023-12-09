@@ -13,6 +13,10 @@
         <div class="col-12 col-md-6">
             <div class="row align-content-center">
                 <div class="col-12 mb-3">
+                    @Html.LabelFor(x => x.ClinicName, new { @class = "form-label mb-1" })
+                    @Html.TextBoxFor(x => x.ClinicName, new { @class = "form-control", @placeholder = "San Paulo Veterinary Clinic", @required = "required", @autocomplete = "true" })
+                </div>
+                <div class="col-12 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressLine1, new { @class = "form-label mb-1" })
                     @Html.TextBoxFor(x => x.ClinicAddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @required = "required", @autocomplete = "true" })
                 </div>

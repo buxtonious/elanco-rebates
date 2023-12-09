@@ -1,15 +1,5 @@
-﻿namespace Er.Core.Responses
+﻿namespace Er.Models.ValueObjects
 {
-    public class ErrorResponse
-    {
-        public ErrorResponse()
-        {
-            Errors = new List<Error>();
-        }
-
-        public List<Error> Errors { get; private set; }
-    }
-
     public class Error
     {
         public Error(string field, string message)

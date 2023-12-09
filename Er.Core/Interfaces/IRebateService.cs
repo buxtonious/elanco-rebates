@@ -4,7 +4,7 @@ namespace Er.Core.Interfaces
 {
     public interface IRebateService
     {
-        RebateForm BeginForm(Guid rebateOfferId);
+        RebateForm BeginForm(Guid rebateOfferNId);
         void SubmitForm(RebateForm model);
     }
 }

@@ -6,7 +6,7 @@ namespace Er.Core.Models
     {
         public RebateFormStep3()
         {
-
+            
         }
 
         [DisplayName("Payment method")]
@@ -26,7 +26,5 @@ namespace Er.Core.Models
 
         [DisplayName("I agree to the terms and conditions")]
         public bool AgreeToTermsAndConditions { get; set; }
-
-        public List<string> PaymentMethods { get; private set; }
     }
 }

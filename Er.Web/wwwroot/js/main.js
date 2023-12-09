@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let validator = new Validator();
-    let navigationManager = new NavigationManager(validator);
+    const validator = new Validator();
+    const navigationManager = new NavigationManager(validator);
 
     registerNavigationButtons();
     registerSubmissionButton();
@@ -70,16 +70,21 @@ class NavigationManager {
 
         let form = document.querySelector("form");
         let formData = new FormData(form);
+        let response;
 
         try {
-            let response = await fetch("/Rebate", {
+            response = await fetch("/Rebate/Submit", {
                 method: "POST",
                 body: formData
             });
-
-            console.log(response);
         } catch (error) {
             console.log(error);
+        }
+
+        if (!response.ok) {
+            let validationErrors = await response.json();
+
+            this.validator.displayErrors(validationErrors);
         }
     }
 
@@ -94,6 +99,12 @@ class NavigationManager {
         let currentStepContainer = document.querySelector(`.step[data-step="${currentStep}"]`);
         let nextStepContainer = document.querySelector(`.step[data-step="${stepToNavigateTo}"]`);
 
+        if (!nextStepContainer) {
+            console.log("Failed to navigate forward, you should try again");
+
+            return;
+        }
+
         currentStepContainer.style.display = "none";
         nextStepContainer.style.display = "block";
     }
@@ -101,6 +112,12 @@ class NavigationManager {
     navigateBackward(currentStep, stepToNavigateTo) {
         let currentStepContainer = document.querySelector(`.step[data-step="${currentStep}"]`);
         let previousStepContainer = document.querySelector(`.step[data-step="${stepToNavigateTo}"]`);
+
+        if (!previousStepContainer) {
+            console.log("Failed to navigate backward, you should try again");
+
+            return;
+        }
 
         currentStepContainer.style.display = "none";
         previousStepContainer.style.display = "block";
@@ -134,25 +151,48 @@ class Validator {
 
             // create the error message using the label name (e.g. first name, email)
             let labelText = requiredFields[i].labels[0].textContent;
-            let errorMessage = this.createErrorMessage(requiredFields[i], labelText);
+            let errorMessage = this.createErrorMessage(requiredFields[i], labelText, false);
+            let anchorErrorMessage = this.createErrorMessage(requiredFields[i], labelText, true);
 
             // add the message to the validation errors, we also add a key which is the input ID
             // so we have an easier time removing errors from the array and validation summary we create later
-            this.validationErrors.push({ key: requiredFields[i].id, message: errorMessage });
+            this.validationErrors.push({ key: requiredFields[i].id, message: errorMessage, anchorMessage: anchorErrorMessage});
             this.createValidationElement(requiredFields[i], errorMessage);
         }
 
-        this.createValidationSummary();
-
         if (!this.validationErrors || this.validationErrors.length > 0) {
+            this.createValidationSummary();
+
             return false;
         }
 
         return true;
     }
 
-    createErrorMessage(requiredField, labelText) {
+    displayErrors(validationErrors) {
+        this.clearValidationErrors();
+
+        // displays server side validation errors
+        for (let i = 0; i < validationErrors.length; i++) {
+            let fieldId = validationErrors[i].field.replace(/\./g, "_");;
+            let errorMessage = validationErrors[i].message;
+
+            let field = document.getElementById(fieldId);
+
+            this.validationErrors.push({ key: fieldId, message: errorMessage });
+            this.createValidationElement(field, errorMessage);
+        }
+
+        this.createValidationSummary();
+    }
+
+    createErrorMessage(requiredField, labelText, attachAnchorTag) {
         labelText = labelText.toLowerCase();
+
+        if (attachAnchorTag) {
+            labelText = `<a href="#${requiredField.id}">${labelText}</a>`;
+        }
+
         let errorMessage = `Please enter your ${labelText}`;
 
         // uses form validation to determine what validation issue has occured
@@ -173,11 +213,10 @@ class Validator {
     }
 
     createValidationElement(requiredField, errorMessage) {
-        // creates a span element below the corresponding
         let inputContainer = requiredField.closest("div");
         let errorSpan = document.createElement("span");
 
-        errorSpan.classList.add("validation-error");
+        errorSpan.classList.add("validation-error", "d-block");
         errorSpan.textContent = errorMessage;
 
         requiredField.classList.add("validation-error");
@@ -204,7 +243,7 @@ class Validator {
             let alertListItem = document.createElement("li");
 
             alertListItem.classList.add(this.validationErrors[i].key);
-            alertListItem.textContent = this.validationErrors[i].message;
+            alertListItem.innerHTML = this.validationErrors[i].anchorMessage;
 
             alertUnorderedList.appendChild(alertListItem);
         }
@@ -223,10 +262,11 @@ class Validator {
         for (let i = 0; i < this.validationErrors.length; i++) {
             if (this.validationErrors[i].key == key) {
                 this.validationErrors.splice(i, 1);
+
+                break;
             }
         }
 
-        let alert = document.querySelector(".validation-summary .alert");
         let listItem = document.querySelector(`.validation-summary li.${key}`);
         let errorSpan = field.closest("div").querySelector("span.validation-error");
 
@@ -235,10 +275,6 @@ class Validator {
             errorSpan.remove();
 
             field.classList.remove("validation-error");
-        }
-
-        if (this.validationErrors.length == 0 && alert) {
-            alert.remove();
         }
     }
 

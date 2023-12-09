@@ -22,37 +22,45 @@ namespace Er.Core.Validators
         {
             RuleFor(x => x.PersonalDetails.Salutation)
                 .NotEmpty()
-                .WithMessage("Please select your salutation")
+                .WithMessage("Salutation is required")
                 .Must(_salutationHelper.IsInList)
-                .WithMessage("Please select a valid salutation");
+                .WithMessage("Salutation is not a valid salutation");
 
             RuleFor(x => x.PersonalDetails.FirstName)
                 .NotEmpty()
-                .WithMessage("Please enter your first name")
+                .WithMessage("First name is required")
                 .MaximumLength(60)
                 .WithMessage("First name exceeds maximum length of 60 characters");
 
             RuleFor(x => x.PersonalDetails.LastName)
                 .NotEmpty()
-                .WithMessage("Please enter your last name")
+                .WithMessage("Last name is required")
                 .MaximumLength(60)
                 .WithMessage("Last name exceeds maximum length of 60 characters");
 
+            RuleFor(x => x.PersonalDetails.Email)
+                .NotEmpty()
+                .WithMessage("Email is required")
+                .EmailAddress()
+                .WithMessage("Email is not a valid email address")
+                .MaximumLength(60)
+                .WithMessage("Email exceeds maximum length of 60 characters");
+
             RuleFor(x => x.PersonalDetails.PetName)
                 .NotEmpty()
-                .WithMessage("Please enter your pet name")
+                .WithMessage("Pet name is required")
                 .MaximumLength(60)
                 .WithMessage("Pet name exceeds maximum length of 60 characeters");
 
             RuleFor(x => x.PersonalDetails.PetBirthday)
                 .NotEmpty()
                 .Must(x => DateTime.TryParse(x, out _))
-                .When(x => string.IsNullOrEmpty(x.PersonalDetails.PetBirthday))
-                .WithMessage("Please enter a valid pet birthday");
+                .When(x => !string.IsNullOrEmpty(x.PersonalDetails.PetBirthday))
+                .WithMessage("Pet birthday is not a valid date");
 
             RuleFor(x => x.PersonalDetails.PersonalAddressLine1)
                 .NotEmpty()
-                .WithMessage("Please enter your address line 1")
+                .WithMessage("Address line 1 is required")
                 .MaximumLength(100)
                 .WithMessage("Address line 1 exceeds maximum length of 100 characters");
 
@@ -62,34 +70,34 @@ namespace Er.Core.Validators
 
             RuleFor(x => x.PersonalDetails.PersonalAddressCity)
                 .NotEmpty()
-                .WithMessage("Please enter your address city")
+                .WithMessage("Address city is required")
                 .MaximumLength(60)
-                .WithMessage("Address city exceeds maximum length of 60 characteres");
+                .WithMessage("Address city exceeds maximum length of 60 characters");
 
             RuleFor(x => x.PersonalDetails.PersonalAddressCountry)
                 .NotEmpty()
-                .WithMessage("Please select your address country")
+                .WithMessage("Address country is required")
                 .Must(_countryHelper.IsInList)
-                .WithMessage("Please select a valid address country");
+                .WithMessage("Address country is not a valid country");
 
             RuleFor(x => x.PersonalDetails.PersonalAddressPostCode)
                 .NotEmpty()
-                .WithMessage("Please enter your address postcode")
+                .WithMessage("Address postcode is required")
                 .Matches(@"^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0A{2})$")
-                .WithMessage("Please enter a valid UK postcode for your address");
+                .WithMessage("Address postcode is not a valid UK postcode");
         }
 
         private void ValidateClinicDetails()
         {
             RuleFor(x => x.ClinicDetails.ClinicName)
                 .NotEmpty()
-                .WithMessage("Please enter your clinic name")
+                .WithMessage("Clinic name is required")
                 .MaximumLength(60)
                 .WithMessage("Clinic name exceeds the maximum length of 60 characters");
 
             RuleFor(x => x.ClinicDetails.ClinicAddressLine1)
                 .NotEmpty()
-                .WithMessage("Please enter your clinic address line 1")
+                .WithMessage("Clinic address line 1 is required")
                 .MaximumLength(100)
                 .WithMessage("Clinic address line 1 exceeds maximum length of 100 characters");
 
@@ -99,21 +107,21 @@ namespace Er.Core.Validators
 
             RuleFor(x => x.ClinicDetails.ClinicAddressCity)
                 .NotEmpty()
-                .WithMessage("Please enter your clinic address city")
+                .WithMessage("Clinic address city is required")
                 .MaximumLength(60)
-                .WithMessage("Clinic address city exceeds maximum length of 60 characteres");
+                .WithMessage("Clinic address city exceeds maximum length of 60 characters");
 
             RuleFor(x => x.ClinicDetails.ClinicAddressCountry)
                 .NotEmpty()
-                .WithMessage("Please select your clinic address country")
+                .WithMessage("Clinic address country is required")
                 .Must(_countryHelper.IsInList)
-                .WithMessage("Please select a valid clinic address country");
+                .WithMessage("Clinic address country is not a valid address country");
 
             RuleFor(x => x.ClinicDetails.ClinicAddressPostCode)
                 .NotEmpty()
-                .WithMessage("Please enter your clinic address postcode")
+                .WithMessage("Clinic address postcode")
                 .Matches(@"^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0A{2})$")
-                .WithMessage("Please enter a valid UK postcode for your clinic address");
+                .WithMessage("Address postcode is not a valid UK postcode");
         }
     }
 }

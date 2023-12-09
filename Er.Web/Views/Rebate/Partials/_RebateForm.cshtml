@@ -4,7 +4,7 @@
 }
 
 <div class="container container-fluid px-md-5">
-    @using (Html.BeginForm("OnPost", "Rebate", FormMethod.Post))
+    @using (Html.BeginForm("Submit", "Rebate", FormMethod.Post, new { @novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
         <div class="validation-summary"></div>

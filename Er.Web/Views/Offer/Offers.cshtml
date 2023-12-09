@@ -1,7 +1,6 @@
-﻿@page
-@model Er.Web.Pages.IndexModel
+﻿@model Er.Web.Models.OffersViewModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Rebate Offers";
     Layout = "_Layout";
 }
 
@@ -14,7 +13,7 @@
         <div class="py-3">
             @if (Model.RebateOffers != null && Model.RebateOffers.Any())
             {
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("SelectRebateOffer", "Offer", FormMethod.Post))
                 {
                     <table class="table">
                         <thead>
@@ -31,7 +30,7 @@
                                 <tr>
                                     <td>@rebateOffer.Name</td>
                                     <td>@rebateOffer.Code</td>
-                                    <td>@rebateOffer.SubmissionDeadline</td>
+                                    <td>@DateOnly.FromDateTime(rebateOffer.SubmissionDeadline)</td>
                                     <td><button class="btn btn-primary" name="rebateOfferId" value="@rebateOffer.Id" type="submit">Claim</button></td>
                                 </tr>
                             }

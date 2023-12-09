@@ -8,8 +8,7 @@ namespace Er.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddRazorPages();
-
+            builder.Services.AddControllersWithViews();
             builder.Services.AddCore();
 
             var app = builder.Build();
@@ -24,7 +23,7 @@ namespace Er.Web
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
-            app.MapRazorPages();
+            app.MapControllerRoute(name: "default", pattern: "{controller=Offer}/{action=Offers}/{id?}");
 
             app.Run();
         }

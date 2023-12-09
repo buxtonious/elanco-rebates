@@ -8,11 +8,14 @@
     --er-white: #FFF;
 }
 
+* {
+    font-family: 'Ubuntu', sans-serif !important;
+}
+
 body {
     box-sizing: border-box;
     margin: 0;
     color: var(--er-secondary) !important;
-    font-family: 'Ubuntu', sans-serif !important;
 }
 
 h2 {
@@ -58,9 +61,19 @@ h4 {
     border: 2px solid var(--bs-danger) !important;
 }
 
+.validation-summary .alert a {
+    color: var(--bs-danger);
+    font-weight: 600;
+}
+
 span.validation-error {
     color: var(--bs-danger) !important;
     font-size: 14px !important;
+}
+
+.card label {
+    font-size: 14px;
+    text-transform: uppercase;
 }
 
 input.validation-error, select.validation-error {
