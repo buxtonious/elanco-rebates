@@ -7,7 +7,7 @@
     @using (Html.BeginForm("Submit", "Rebate", FormMethod.Post, new { @novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
-        <div class="validation-summary"></div>
+        @Html.ValidationSummary(false, "")
         <div class="step" data-step="1">
             @await Html.PartialAsync("Partials/_RebateFormStep1", Model.PersonalDetails)
         </div>

@@ -55,18 +55,31 @@ h4 {
 }
 
 /* Form */
-.validation-summary .alert {
+.validation-summary-errors {
     background-color: var(--er-white) !important;
     color: var(--bs-danger) !important;
     border: 2px solid var(--bs-danger) !important;
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 1.25rem;
 }
 
-.validation-summary .alert a {
+.validation-summary-errors ul {
+    margin-bottom: 0;
+}
+
+.validation-summary-errors span {
+    display: block;
     color: var(--bs-danger);
+    font-size: 21.525px;
     font-weight: 600;
+    margin-bottom: 1.25rem;
 }
 
-span.validation-error {
+input.input-validation-error, select.input-validation-error {
+    border-color: var(--bs-danger) !important;
+}
+
+span.field-validation-error {
     color: var(--bs-danger) !important;
     font-size: 14px !important;
 }
@@ -74,10 +87,6 @@ span.validation-error {
 .card label {
     font-size: 14px;
     text-transform: uppercase;
-}
-
-input.validation-error, select.validation-error {
-    border-color: var(--bs-danger) !important;
 }
 
 .form-control, .form-select {
