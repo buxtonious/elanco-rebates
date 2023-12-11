@@ -32,8 +32,7 @@
                 "Mrs",
                 "Ms",
                 "Miss",
-                "Dr",
-                "Other"
+                "Dr"
             };
         }
     }

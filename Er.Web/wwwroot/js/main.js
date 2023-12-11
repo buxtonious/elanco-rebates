@@ -267,6 +267,7 @@ class Validator {
             }
         }
 
+        let list = document.querySelector(".validation-summary ul");
         let listItem = document.querySelector(`.validation-summary li.${key}`);
         let errorSpan = field.closest("div").querySelector("span.validation-error");
 
@@ -275,6 +276,13 @@ class Validator {
             errorSpan.remove();
 
             field.classList.remove("validation-error");
+        }
+
+        if (list && !list.hasChildNodes()) {
+            let alert = document.querySelector(".validation-summary .alert");
+
+            alert.remove();
+            this.validationErrors = [];
         }
     }
 
