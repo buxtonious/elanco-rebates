@@ -14,28 +14,34 @@
             <div class="row align-content-center">
                 <div class="col-12 mb-3">
                     @Html.LabelFor(x => x.ClinicName, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.ClinicName, new { @class = "form-control", @placeholder = "San Paulo Veterinary Clinic", @required = "required", @autocomplete = "true" })
+                    @Html.TextBoxFor(x => x.ClinicName, new { @class = "form-control", @placeholder = "San Paulo Veterinary Clinic", @autocomplete = "true" })
+                    @Html.ValidationMessageFor(x => x.ClinicName)
                 </div>
                 <div class="col-12 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressLine1, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.ClinicAddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @required = "required", @autocomplete = "true" })
+                    @Html.TextBoxFor(x => x.ClinicAddressLine1, new { @class = "form-control", @placeholder = "123 Dean Lane", @autocomplete = "true" })
+                    @Html.ValidationMessageFor(x => x.ClinicAddressLine1)
                 </div>
                 <div class="col-12 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressLine2, new { @class = "form-label mb-1" })
                     @Html.TextBoxFor(x => x.ClinicAddressLine2, new { @class = "form-control", @autocomplete = "true" })
+                    @Html.ValidationMessageFor(x => x.ClinicAddressLine2)
                 </div>
                 <div class="col-12 col-md-6 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressCity, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.ClinicAddressCity, new { @class = "form-control", @placeholder = "London", @required = "required", @autocomplete = "true" })
+                    @Html.TextBoxFor(x => x.ClinicAddressCity, new { @class = "form-control", @placeholder = "London", @autocomplete = "true" })
+                    @Html.ValidationMessageFor(x => x.ClinicAddressCity)
                 </div>
                 <div class="col-12 col-md-6"></div>
                 <div class="col-12 col-md-6 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressCountry, new { @class = "form-label mb-1" })
-                    @Html.DropDownListFor(x => x.ClinicAddressCountry, countries, "Please select", new { @class = "form-select", @required = "required" })
+                    @Html.DropDownListFor(x => x.ClinicAddressCountry, countries, "Please select", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(x => x.ClinicAddressCountry)
                 </div>
                 <div class="col-12 col-md-6 mb-3">
                     @Html.LabelFor(x => x.ClinicAddressPostCode, new { @class = "form-label mb-1" })
-                    @Html.TextBoxFor(x => x.ClinicAddressPostCode, new { @class = "form-control", @placeholder = "SW12 3AE", @required = "required", @autocomplete = "true" })
+                    @Html.TextBoxFor(x => x.ClinicAddressPostCode, new { @class = "form-control", @placeholder = "SW12 3AE", @autocomplete = "true" })
+                    @Html.ValidationMessageFor(x => x.ClinicAddressPostCode)
                 </div>
             </div>
         </div>
