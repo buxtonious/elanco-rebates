@@ -1,7 +1,6 @@
 ﻿using Er.Core.Interfaces;
 using Er.Core.Models;
 using Er.Core.Validators;
-using Er.Models.ValueObjects;
 using Er.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,15 +37,17 @@ namespace Er.Web.Controllers
 
             if (!validationResult.IsValid)
             {
+                _rebateService.RepopulateForm(model);
+
                 foreach (var result in validationResult.Errors)
                 {
                     ModelState.AddModelError(result.PropertyName, result.ErrorMessage);
                 }
 
-                return BadRequest(new { message = "Oops, we've found some errors, please fix them before continuing" });
+                return PartialView("Partials/_RebateForm", model);
             }
 
-            return RedirectToPage("ThankYou");
+            return RedirectToAction("ThankYou");
         }
     }
 }

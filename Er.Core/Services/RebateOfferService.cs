@@ -5,7 +5,7 @@ namespace Er.Core.Services
 {
     internal class RebateOfferService : IRebateOfferService
     {
-        private List<RebateOffer> rebateOffers;
+        private readonly List<RebateOffer> rebateOffers;
 
         public RebateOfferService()
         {

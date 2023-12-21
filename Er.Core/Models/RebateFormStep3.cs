@@ -6,7 +6,7 @@ namespace Er.Core.Models
     {
         public RebateFormStep3()
         {
-            
+
         }
 
         [DisplayName("Payment method")]

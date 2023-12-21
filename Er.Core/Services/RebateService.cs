@@ -27,6 +27,22 @@ namespace Er.Core.Services
             return new RebateForm(matchedRebate, salutations, countries);
         }
 
+        public RebateForm RepopulateForm(RebateForm model)
+        {
+            var rebateOfferId = model.PersonalDetails.SelectedRebate.Id;
+
+            var matchedRebate = _rebateOfferService.Find(rebateOfferId);
+            var salutations = _salutationHelper.ListAll();
+            var countries = _countryHelper.ListAll();
+
+            model.PersonalDetails.AddSelectedRebate(matchedRebate);
+            model.PersonalDetails.AddSalutations(salutations);
+            model.PersonalDetails.AddCountries(countries);
+            model.ClinicDetails.AddCountries(countries);
+
+            return model;
+        }
+
         public void SubmitForm(RebateForm model)
         {
             throw new NotImplementedException();

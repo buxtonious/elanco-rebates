@@ -45,5 +45,10 @@ namespace Er.Core.Models
         public string ClinicAddressPostCode { get; set; }
 
         public List<string> Countries { get; private set; }
+
+        public void AddCountries(List<string> countries)
+        {
+            Countries = countries;
+        }
     }
 }

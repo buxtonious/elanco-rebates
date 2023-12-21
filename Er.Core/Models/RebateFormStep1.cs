@@ -76,5 +76,20 @@ namespace Er.Core.Models
 
         public List<string> Salutations { get; private set; }
         public List<string> Countries { get; private set; }
+
+        public void AddSelectedRebate(RebateOffer selectedRebate)
+        {
+            SelectedRebate = selectedRebate;
+        }
+
+        public void AddSalutations(List<string> salutations)
+        {
+            Salutations = salutations;
+        }
+
+        public void AddCountries(List<string> countries)
+        {
+            Countries = countries;
+        }
     }
 }

@@ -27,18 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function registerSubmissionButton() {
+    function registerSubmissionButton() {
         let form = document.querySelector("form");
 
-        form.addEventListener("submit", async function (event) {
+        form.addEventListener("submit", function (event) {
             event.preventDefault();
-            await navigationManager.submitForm();
+            navigationManager.submitForm();
         });
     }
 });
 
 class NavigationManager {
-    async submitForm() {
+
+    submitForm() {
         var $form = $("form");
 
         if (!$form.valid()) {
@@ -47,19 +48,24 @@ class NavigationManager {
             return;
         }
 
-        let form = document.querySelector("form");
-        let formData = new FormData(form);
+        $.ajax({
+            url: "/Rebate/Submit",
+            type: "POST",
+            data: $form.serialize(),
+            beforeSend: function () {
 
-        try {
-            let response = await fetch("/Rebate/Submit", {
-                method: "POST",
-                body: formData
-            });
+            },
+            success: function (result) {
+                if (!result.success) {
+                    $("#form-wrapper").html(result);
 
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
+                    // TODO: re-register button events
+                }
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
     }
 
     navigateForward(currentStep, stepToNavigateTo) {
