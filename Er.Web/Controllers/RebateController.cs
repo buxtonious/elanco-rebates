@@ -38,14 +38,12 @@ namespace Er.Web.Controllers
 
             if (!validationResult.IsValid)
             {
-                var errors = new List<Error>();
-
-                foreach (var error in validationResult.Errors)
+                foreach (var result in validationResult.Errors)
                 {
-                    errors.Add(new Error(error.PropertyName, error.ErrorMessage));
+                    ModelState.AddModelError(result.PropertyName, result.ErrorMessage);
                 }
 
-                return BadRequest(errors);
+                return BadRequest(new { message = "Oops, we've found some errors, please fix them before continuing" });
             }
 
             return RedirectToPage("ThankYou");

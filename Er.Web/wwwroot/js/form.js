@@ -32,43 +32,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
-            await navigationManager.submitForm(currentStep);
+            await navigationManager.submitForm();
         });
     }
 });
 
 class NavigationManager {
     async submitForm() {
-        var form = $("form");
-        form.validate();
+        var $form = $("form");
 
-        if (!form.valid()) {
+        if (!$form.valid()) {
+            $form.validate();
+
             return;
         }
 
-        let response;
+        let form = document.querySelector("form");
+        let formData = new FormData(form);
 
         try {
-            response = await fetch("/Rebate/Submit", {
+            let response = await fetch("/Rebate/Submit", {
                 method: "POST",
-                body: form.serialize()
+                body: formData
             });
+
+            console.log(response);
         } catch (error) {
             console.log(error);
-        }
-
-        if (!response.ok) {
-            let validationErrors = await response.json();
-
-            this.validator.displayErrors(validationErrors);
         }
     }
 
     navigateForward(currentStep, stepToNavigateTo) {
-        var form = $("form");
-        form.validate();
+        var $form = $("form");
 
-        if (!form.valid()) {
+        if (!$form.valid()) {
+            $form.validate();
+
             return;
         }
 
