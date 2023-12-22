@@ -30,6 +30,14 @@ namespace Er.Web.Controllers
         }
 
         [HttpPost]
+        public IActionResult Upload(RebateForm model)
+        {
+            _rebateService.RepopulateForm(model);
+
+            return PartialView("Partials/_RebateForm", model);
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Submit(RebateForm model)
         {

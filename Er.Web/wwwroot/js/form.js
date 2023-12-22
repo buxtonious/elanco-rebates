@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const navigationManager = new NavigationManager();
-
     registerNavigationButtons();
+    registerUploadTriggers();
     registerSubmissionButton();
 
     function registerNavigationButtons() {
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let currentStep = event.target.closest(".step").dataset.step;
                 let stepToNavigateTo = event.target.dataset.next;
 
-                navigationManager.navigateForward(currentStep, stepToNavigateTo);
+                NavigationManager.navigateForward(currentStep, stepToNavigateTo);
             });
         }
 
@@ -22,7 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 let currentStep = event.target.closest(".step").dataset.step;
                 let stepToNavigateTo = event.target.dataset.back;
 
-                navigationManager.navigateBackward(currentStep, stepToNavigateTo);
+                NavigationManager.navigateBackward(currentStep, stepToNavigateTo);
+            });
+        }
+    }
+
+    function registerUploadTriggers() {
+        let uploadTriggers = document.querySelectorAll(".form-file-upload");
+
+        for (let i = 0; i < uploadTriggers.length; i++) {
+            uploadTriggers[i].addEventListener("change", function (event) {
+                let file = event.target.files[0];
+
+                FormManager.uploadFile(file);
             });
         }
     }
@@ -32,14 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-            navigationManager.submitForm();
+            FormManager.submitForm();
         });
     }
 });
 
-class NavigationManager {
+FormManager = {
+    uploadFile: function (file) {
+        let form = document.querySelector("form");
+        let formData = new FormData(form);
 
-    submitForm() {
+        formData.append(file.name, file);
+
+        let response = HttpClient.post("/Rebate/Upload", formData);
+
+        if (!response.isSuccess) {
+            console.log(response.message);
+        }
+    },
+
+    submitForm: function () {
         var $form = $("form");
 
         if (!$form.valid()) {
@@ -48,27 +71,21 @@ class NavigationManager {
             return;
         }
 
-        $.ajax({
-            url: "/Rebate/Submit",
-            type: "POST",
-            data: $form.serialize(),
-            beforeSend: function () {
+        let form = document.querySelector("form");
+        let formData = new FormData(form);
 
-            },
-            success: function (result) {
-                if (!result.success) {
-                    $("#form-wrapper").html(result);
+        let response = HttpClient.post("/Rebate/Submit", formData);
 
-                    // TODO: re-register button events
-                }
-            },
-            error: function (result) {
-                console.log(result);
-            }
-        });
+        if (!response.isSuccess) {
+            console.log(response.message);
+        }
+
+        $("#form-wrapper").html(response.data);
     }
+}
 
-    navigateForward(currentStep, stepToNavigateTo) {
+NavigationManager = {
+    navigateForward: function (currentStep, stepToNavigateTo) {
         var $form = $("form");
 
         if (!$form.valid()) {
@@ -88,9 +105,9 @@ class NavigationManager {
 
         currentStepContainer.style.display = "none";
         nextStepContainer.style.display = "block";
-    }
+    },
 
-    navigateBackward(currentStep, stepToNavigateTo) {
+    navigateBackward: function (currentStep, stepToNavigateTo) {
         let currentStepContainer = document.querySelector(`.step[data-step="${currentStep}"]`);
         let previousStepContainer = document.querySelector(`.step[data-step="${stepToNavigateTo}"]`);
 
@@ -102,5 +119,43 @@ class NavigationManager {
 
         currentStepContainer.style.display = "none";
         previousStepContainer.style.display = "block";
+    }
+}
+
+HttpClient = {
+    post: function (url, data) {
+        let response = {
+            isSuccess: false,
+            data: null,
+            message: null
+        };
+
+        try {
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    response.isSuccess = true;
+                    response.data = result;
+                },
+                error: function (result) {
+                    console.log("An error occurred in the server: " + result);
+
+                    response.isSuccess = false;
+                    response.message = result.message;
+                }
+            });
+        } catch (error) {
+            console.log("An unexpected error occurred processing data: " + error);
+
+            response.isSuccess = false;
+            response.message = error.message;
+        }
+
+        return response;
     }
 }

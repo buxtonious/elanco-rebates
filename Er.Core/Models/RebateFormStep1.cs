@@ -1,4 +1,5 @@
 ﻿using Er.Models.Entities;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -72,6 +73,9 @@ namespace Er.Core.Models
         [DisplayName("Pet birthday (optional)")]
         public string PetBirthday { get; set; }
 
+        [Required(ErrorMessage = "Receipt picture is required")]
+        [DisplayName("Receipt")]
+        public IFormFile UploadedReceipt { get; set; }
         public RebateOffer SelectedRebate { get; set; }
 
         public List<string> Salutations { get; private set; }
