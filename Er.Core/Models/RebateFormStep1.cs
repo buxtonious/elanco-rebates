@@ -73,7 +73,7 @@ namespace Er.Core.Models
         [DisplayName("Pet birthday (optional)")]
         public string PetBirthday { get; set; }
 
-        [Required(ErrorMessage = "Receipt picture is required")]
+        [Required(ErrorMessage = "Receipt is required")]
         [DisplayName("Receipt")]
         public IFormFile UploadedReceipt { get; set; }
         public RebateOffer SelectedRebate { get; set; }

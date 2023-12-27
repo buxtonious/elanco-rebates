@@ -43,6 +43,11 @@ namespace Er.Core.Services
             return model;
         }
 
+        public RebateForm UploadReceipt(RebateForm model)
+        {
+            return model;
+        }
+
         public void SubmitForm(RebateForm model)
         {
             throw new NotImplementedException();

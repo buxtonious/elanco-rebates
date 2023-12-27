@@ -1,4 +1,5 @@
 using Er.Core.Extensions;
+using Er.Infrastructure.Extensions;
 
 namespace Er.Web
 {
@@ -10,6 +11,7 @@ namespace Er.Web
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddCore();
+            builder.Services.AddInfrastructure();
 
             var app = builder.Build();
 
